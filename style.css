@@ -1,0 +1,122 @@
+.hides button{
+    
+    padding: 10px 20px; 
+    appearance: none;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0,.5);
+    font-size: 25px;
+}
+.hides button:hover{
+   background-color: rgb(0, 255, 0);
+}
+body{
+    background: url('src/PetAniBG-1001-Una-star1-Frame0001.png');
+background-size: cover;         
+background-repeat: no-repeat;  
+
+}
+        .main-coll{
+            display: none;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            background: rgb(0, 0, 0,.5);
+     
+        }
+        .main-coll span{
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #fff;
+            font-size: 35px;
+            font-family: sans-serif;
+        }
+        .Display{
+            width: auto;
+            position: relative;
+            height: 650px;
+    
+        }
+        .Display video{
+            width: auto;
+            height: 650px;
+            border: 5px solid #fff;
+            border-radius: 20px;
+            background:linear-gradient(0deg, rgb(255, 255, 255) 10%, rgb(40, 214, 241) 100%);
+            width: 375px;
+
+        }
+       .btns{
+        display: flex;
+        position: absolute;
+        width: 375px;
+        justify-content: space-evenly;
+         bottom: 2px;   
+        flex-wrap: wrap;
+    
+    }
+       .btns button{
+        padding-top: 10px;
+      border-radius: 50px 50px 20px 20px;
+    font-size: medium;
+    font-family: sans-serif;
+    color: #fff;
+    background:linear-gradient(0deg, rgba(182,2,255,1) 10%, rgba(253,45,162,1) 100%);
+    border: 2px solid #fff;
+    
+    }
+    .btns button:hover{
+        background: linear-gradient(0deg, rgb(91, 255, 2) 10%, rgb(45, 253, 135) 100%);
+    }
+    .btns button:focus{
+        background: linear-gradient(0deg, rgb(91, 255, 2) 10%, rgb(45, 253, 135) 100%);
+    }
+    .btns button:active{
+        background: linear-gradient(0deg, rgb(91, 255, 2) 10%, rgb(45, 253, 135) 100%);
+    }
+    .vid-coll{
+        flex-wrap: wrap;
+        justify-content: center;
+        background: rgb(0, 0, 0,.5);
+        border-radius: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+       }
+       .vid-coll div img{
+        width: 100px;
+        padding: 5px;
+        border-radius: 15px;
+       }
+
+       @media(max-width:385px){
+        .Display{
+            width: 100%;
+            position: relative;
+            height: auto;
+    
+        }
+        .Display video{
+            height: auto;
+            width: 100%;
+
+       }
+       .main-coll span{
+        right: 5px;
+        top: 5px;
+        font-size: 25px;
+       }
+       .btns{
+       
+        width: 99%;
+        justify-content: space-evenly;
+         bottom: 5px;   
+        flex-wrap: wrap;
+    
+    }
+    }

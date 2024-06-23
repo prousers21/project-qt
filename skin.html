@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="main-coll" >
+
+        <span onclick=" Mhide()">X</span>
+
+        <div class="Display" >
+            <video class="Vids" src=""></video>
+        <div class="btns">
+
+        </div>
+         </div>
+
+</main>
+
+
+    <main class="vid-coll" style="display: flex;">
+
+    </main>
+
+<center class="h12" style="display: flex;justify-content: center;">
+    <a href="index.html" style="text-decoration: none; padding: 10px 20px; appearance: none;color: #fff;border: 1px solid #fff;border-radius: 10px;background-color: rgb(0, 0, 0,.5);font-size: 25px;text-align: center;margin-top: 90px;margin-bottom: 50px;" >Restart</a>
+</center>
+
+<script>
+      let VidColl=document.querySelector('.vid-coll')  
+      let Btns=document.querySelector('.btns')
+let Vids=document.querySelector('.Vids')
+let Bg=document.querySelector('body')
+let Fnum = 0
+let Snum = 0
+let Mdata
+        fetch('file2.json')
+     .then(res => res.json())
+     .then(data => {
+
+console.log(data.children[0])
+
+for (let index = 0; index < data.children.length -1; index++) {
+    let Div=document.createElement('div')
+    Div.id=`${index}`
+     Div.innerHTML=`
+         <img src="src/${data.children[index].name}-star1.png" alt="src/${data.children[index].name}-star1.png" id="${index}" onclick="Changevid(this.id)">
+     `  
+     VidColl.append(Div)
+     
+}
+
+Mdata = data
+     })
+
+     function Changevid(az){
+        
+        Snum = az
+         Vids.src= `PetSkins/${Mdata.children[az].name}/${Mdata.children[az].children[0].name}`
+         Vids.play()
+         Vids.loop =true     
+        document.querySelector('.main-coll').style.display =`flex`
+       VidColl.style.display =`none`
+
+       
+for (let ind = 0; ind < Mdata.children[az].children.length; ind++) {
+
+    let Div2=document.createElement('div')
+     Div2.innerHTML=`
+     <button id="${ind}" onclick="changebtn(this.id)">${ind + 1}</button>
+     `  
+     Div2.id=`${ind}`
+     Btns.append(Div2)
+
+}     
+
+Bground()
+document.querySelector('.h12').style.display =`none`
+
+    }
+
+function changebtn(ad){
+
+    Vids.src= `PetSkins/${Mdata.children[Snum].name}/${Mdata.children[Snum].children[ad].name}`
+         Vids.play()
+         Vids.loop =true
+
+
+        }
+    
+
+function Mhide(){
+    document.querySelector('.main-coll').style.display =`none`
+    VidColl.style.display =`flex`
+    
+    while (Btns.hasChildNodes()) {
+    Btns.removeChild(Btns.firstChild);
+    document.querySelector('.h12').style.display =`flex`
+
+  }
+}
+
+function Bground(){
+    Bg.style.background = `url(src/${Mdata.children[Snum].name}-star1.png)`
+
+}
+function unseen(){
+      VidColl.style.display =`flex`
+      document.querySelector('.hides').style.display =`none`
+      document.querySelector('.h12').style.display =`flex`
+
+}
+</script>
+
+</body>
+</html>
