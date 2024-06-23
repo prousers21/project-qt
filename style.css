@@ -17,7 +17,9 @@ background-size: cover;
 background-repeat: no-repeat;  
 
 }
-        .main-coll{
+
+
+       .main-coll{
             display: none;
             position: fixed;
             top: 0;
@@ -38,12 +40,13 @@ background-repeat: no-repeat;
             font-family: sans-serif;
         }
         .Display{
-            width: auto;
+            width: 380px;
             position: relative;
             height: 650px;
     
         }
         .Display video{
+            background-color: #fff;
             width: auto;
             height: 650px;
             border: 5px solid #fff;
@@ -94,14 +97,18 @@ background-repeat: no-repeat;
 
        @media(max-width:385px){
         .Display{
-            width: 100%;
+            width: 98%;
+           margin-left: 1%;
+            margin-right:1% ;
             position: relative;
             height: auto;
-    
         }
         .Display video{
+            background: none;
             height: auto;
             width: 100%;
+            border: none;
+
 
        }
        .main-coll span{
@@ -110,11 +117,38 @@ background-repeat: no-repeat;
         font-size: 25px;
        }
        .btns{
-       
         width: 99%;
         justify-content: space-evenly;
          bottom: 5px;   
         flex-wrap: wrap;
     
     }
+    }   @media(max-height:660px){
+        .Display{
+            width: auto;
+            height: 99%;
+            margin-top: 0.5%;
+            margin-bottom: 0.5%;
+            background:none;
+
+        }
+        .Display video{
+            height: 100%;
+            width: auto;
+            border: none;
+            background: none;
+
+       }
+       .main-coll span{
+        right: 5px;
+        top: 5px;
+        font-size: 25px;
+       }
+       .btns{
+        width: 99%;
+        justify-content: space-evenly;
+         bottom: 5px;   
+        flex-wrap: wrap;
+    
     }
+}
