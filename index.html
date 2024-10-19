@@ -5,85 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROJECT QT</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .hides {
-            position: fixed;
-            top: 0; bottom: 0; left: 0; right: 0;
-            display: flex; justify-content: center; align-items: center;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-        }
-        .main-coll, .vid-coll {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-        .Display {
-            position: relative;
-            text-align: center;
-        }
-        .btns {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #loading {
-            display: none;
-            text-align: center;
-            font-size: 20px;
-            color: #fff;
-        }
-        video {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #007BFF;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
 
-<div class="hides">
+<div class="hides" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; align-items: center;">
     <button onclick="unseen()">Start</button>
 </div>
 
 <main class="main-coll">
-    <span onclick="Mhide()" style="cursor:pointer;">X</span>
+    <span onclick="Mhide()">X</span>
     <div class="Display">
-        <video class="Vids" controls></video>
+        <video class="Vids" src="Pets/PetAniBG-1001-Una/PetAniBG-1001-Una-star1.webm" controls></video>
         <div class="btns"></div>
     </div>
 </main>
 
 <main class="vid-coll" style="display: none;"></main>
-<div id="loading">Loading...</div>
+<div id="loading" style="display: none;">Loading...</div>
 
 <script>
     let VidColl = document.querySelector('.vid-coll');
     let Btns = document.querySelector('.btns');
     let Vids = document.querySelector('.Vids');
     let Bg = document.querySelector('body');
+    let Fnum = 0;
     let Snum = 0;
     let Mdata;
 
@@ -98,8 +43,6 @@
         .then(data => {
             document.getElementById('loading').style.display = 'none'; // Hide loader
             Mdata = data;
-
-            // Create video thumbnails
             for (let index = 0; index < data.children.length; index++) {
                 let Div = document.createElement('div');
                 Div.id = `${index}`;
@@ -139,14 +82,9 @@
     }
 
     function changebtn(ad) {
-        const newVideoSrc = `PetSkins/${Mdata.children[Snum].name}/${Mdata.children[Snum].children[ad].name}`;
-        Vids.src = newVideoSrc;
-
-        Vids.load(); // Load new video source
-        Vids.play().catch(error => {
-            console.error('Playback error:', error);
-            alert('Failed to play video. Please try another option.');
-        });
+        Vids.src = `PetSkins/${Mdata.children[Snum].name}/${Mdata.children[Snum].children[ad].name}`;
+        Vids.play();
+        Vids.loop = true;
     }
 
     function Mhide() {
