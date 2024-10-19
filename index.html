@@ -8,111 +8,100 @@
 </head>
 <body>
 
-<div class="hides" style="position: fixed;top: 0;bottom: 0;left: 0;right: 0;display: flex;justify-content: center;align-items: center;">
+<div class="hides" style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; align-items: center;">
     <button onclick="unseen()">Start</button>
 </div>
 
-    <main class="main-coll" >
-
-        <span onclick=" Mhide()">X</span>
-
-        <div class="Display" >
-            <video class="Vids" src="Pets/PetAniBG-1001-Una/PetAniBG-1001-Una-star1.webm"></video>
-        <div class="btns">
-
-        </div>
-         </div>
-
+<main class="main-coll">
+    <span onclick="Mhide()">X</span>
+    <div class="Display">
+        <video class="Vids" src="Pets/PetAniBG-1001-Una/PetAniBG-1001-Una-star1.webm" controls></video>
+        <div class="btns"></div>
+    </div>
 </main>
 
+<main class="vid-coll" style="display: none;"></main>
+<div id="loading" style="display: none;">Loading...</div>
 
-    <main class="vid-coll" style="display: none;">
-        
-    </main>
+<script>
+    let VidColl = document.querySelector('.vid-coll');
+    let Btns = document.querySelector('.btns');
+    let Vids = document.querySelector('.Vids');
+    let Bg = document.querySelector('body');
+    let Fnum = 0;
+    let Snum = 0;
+    let Mdata;
 
-    <script>
-      let VidColl=document.querySelector('.vid-coll')  
-      let Btns=document.querySelector('.btns')
-let Vids=document.querySelector('.Vids')
-let Bg=document.querySelector('body')
-let Fnum = 0
-let Snum = 0
-let Mdata
-        fetch('file.json')
-     .then(res => res.json())
-     .then(data => {
+    // Show loading spinner
+    document.getElementById('loading').style.display = 'block';
 
-console.log(data.children[0].children.length)
+    fetch('file.json')
+        .then(res => {
+            if (!res.ok) throw new Error('Network response was not ok');
+            return res.json();
+        })
+        .then(data => {
+            document.getElementById('loading').style.display = 'none'; // Hide loader
+            Mdata = data;
+            for (let index = 0; index < data.children.length; index++) {
+                let Div = document.createElement('div');
+                Div.id = `${index}`;
+                Div.innerHTML = `
+                    <img src="src/${data.children[index].name}-star1.png" 
+                         alt="${data.children[index].name}" 
+                         id="${index}" 
+                         onclick="Changevid(this.id)">
+                `;
+                VidColl.append(Div);
+            }
+        })
+        .catch(error => {
+            document.getElementById('loading').style.display = 'none'; // Hide loader on error
+            console.error('Fetch error:', error);
+        });
 
-for (let index = 0; index < data.children.length - 1; index++) {
-    let Div=document.createElement('div')
-    Div.id=`${index}`
-     Div.innerHTML=`
-         <img src="src/${data.children[index].name}-star1.png" alt="src/${data.children[index].name}-star1.png" id="${index}" onclick="Changevid(this.id)">
-     `  
-     VidColl.append(Div)
-     
-}
+    function Changevid(az) {
+        Snum = az;
+        Vids.src = `PetSkins/${Mdata.children[az].name}/${Mdata.children[az].children[0].name}`;
+        Vids.play();
+        Vids.loop = true;
+        document.querySelector('.main-coll').style.display = `flex`;
+        VidColl.style.display = `none`;
 
-Mdata = data
-     })
+        Btns.innerHTML = ''; // Clear previous buttons
+        for (let ind = 0; ind < Mdata.children[az].children.length; ind++) {
+            let Div2 = document.createElement('div');
+            Div2.innerHTML = `
+                <button id="${ind}" onclick="changebtn(this.id)" aria-label="Play video ${ind + 1}">${ind + 1}</button>
+            `;
+            Div2.id = `${ind}`;
+            Btns.append(Div2);
+        }
 
-     function Changevid(az){
-        
-        Snum = az
-         Vids.src= `PetSkins/${Mdata.children[az].name}/${Mdata.children[az].children[0].name}`
-         Vids.play()
-         Vids.loop =true     
-        document.querySelector('.main-coll').style.display =`flex`
-       VidColl.style.display =`none`
-
-       
-for (let ind = 0; ind < Mdata.children[az].children.length; ind++) {
-
-    let Div2=document.createElement('div')
-     Div2.innerHTML=`
-     <button id="${ind}" onclick="changebtn(this.id)">${ind + 1}</button>
-     `  
-     Div2.id=`${ind}`
-     Btns.append(Div2)
-
-}     
-
-Bground()
-
+        Bground();
     }
 
-function changebtn(ad){
+    function changebtn(ad) {
+        Vids.src = `PetSkins/${Mdata.children[Snum].name}/${Mdata.children[Snum].children[ad].name}`;
+        Vids.play();
+        Vids.loop = true;
+    }
 
-    Vids.src= `PetSkins/${Mdata.children[Snum].name}/${Mdata.children[Snum].children[ad].name}`
-         Vids.play()
-         Vids.loop =true
+    function Mhide() {
+        document.querySelector('.main-coll').style.display = `none`;
+        VidColl.style.display = `flex`;
+        Btns.innerHTML = ''; // Clear previous buttons
+    }
 
+    function Bground() {
+        Bg.style.background = `url(src/${Mdata.children[Snum].name}-star1.png) no-repeat center center fixed`;
+        Bg.style.backgroundSize = 'cover';
+    }
 
-        }
-    
-
-function Mhide(){
-    document.querySelector('.main-coll').style.display =`none`
-    VidColl.style.display =`flex`
-    
-    while (Btns.hasChildNodes()) {
-    Btns.removeChild(Btns.firstChild);
-  }
-
-
-}
-
-function Bground(){
-    Bg.style.background = `url(src/${Mdata.children[Snum].name}-star1.png)`
-
-}
-function unseen(){
-      VidColl.style.display =`flex`
-      document.querySelector('.hides').style.display =`none`
-      
-
-}
+    function unseen() {
+        VidColl.style.display = `flex`;
+        document.querySelector('.hides').style.display = `none`;
+    }
 </script>
 
 </body>
